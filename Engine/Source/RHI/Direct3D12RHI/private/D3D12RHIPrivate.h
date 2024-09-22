@@ -14,6 +14,7 @@
 #include <DDSTextureLoader.h>
 
 #include <Math/Vector.h>
+#include <Math/Matrix.h>
 #include <Window/IWindow.h>
 #include <Mesh.h>
 #include <Material.h>
@@ -42,7 +43,7 @@ namespace GameEngine
 			
 			Material::Ptr GetMaterial(const std::string& name);
 
-			void Update(Mesh::Ptr mesh, Material::Ptr material);
+			void Update(Mesh::Ptr mesh, Material::Ptr material, GameEngine::Core::Math::Matrix4x4f);
 			void ExecuteCommandLists();
 			void FlushCommandQueue();
 			void OnResize();

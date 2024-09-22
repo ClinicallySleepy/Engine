@@ -15,16 +15,20 @@ namespace GameEngine
 	void Game::Run()
 	{
 		assert(PlatformLoop != nullptr);
+		std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
 		bool quit = false;
 		while (!quit)
 		{
-			// The most common idea for such a loop is that it returns false when quit is required, or true otherwise
+			start = std::chrono::steady_clock::now();
 			quit = !PlatformLoop();
 
 			ProcessSystemParams();
 
-			m_renderEngine->Update();
+			std::chrono::duration<double> elapsed = start - end;
+			m_renderEngine->Update(elapsed.count());
+			end = start;
 		}
 	}
 

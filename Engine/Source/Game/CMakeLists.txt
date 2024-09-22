@@ -59,4 +59,6 @@ target_precompile_headers(Game
 		<cassert>
 		<format>
 		<functional>
+		<chrono>
+		<iostream>
 )

@@ -248,7 +248,7 @@ namespace GameEngine
 			}
 		}
 
-		void D3D12RHIPrivate::Update(Mesh::Ptr mesh, Material::Ptr material)
+		void D3D12RHIPrivate::Update(Mesh::Ptr mesh, Material::Ptr material, Math::Matrix4x4f world)
 		{
 			D3D12Mesh d3d12Mesh = *reinterpret_cast<D3D12Mesh*>(mesh.get());
 			D3D12Material d3d12Material = *reinterpret_cast<D3D12Material*>(material.get());
@@ -271,7 +271,7 @@ namespace GameEngine
 			Math::Matrix4x4f view = Core::Math::ViewMatrixLH(pos, target, up);
 			Math::Matrix4x4f proj = Core::Math::ProjectionMatrixLH(0.25f * DirectX::XM_PI, Core::MainWindowsApplication->GetAspectRatio(), 1.0f, 1000.0f);
 
-			Math::Matrix4x4f world = Math::Matrix4x4f::Identity();
+			// Math::Matrix4x4f world = Math::Matrix4x4f::Identity();
 			Math::Matrix4x4f worldViewProj = world * view * proj;
 
 			ObjectConstants objConstants;

@@ -4,6 +4,6 @@ namespace GameEngine::Render
 {
 	RenderObject::RenderObject()
 	{
-
+		
 	}
 }
