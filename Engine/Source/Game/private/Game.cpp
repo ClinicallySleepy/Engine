@@ -17,7 +17,7 @@ namespace GameEngine
 		m_renderThread = std::make_unique<Render::RenderThread>();
 
 		// How many objects do we want to create
-		for (int i = 0; i < 3; ++i)
+		for (int i = 0; i < 1; ++i)
 		{
 			m_Objects.push_back(new GameObject());
 			Render::RenderObject** renderObject = m_Objects.back()->GetRenderObjectRef();
@@ -38,7 +38,7 @@ namespace GameEngine
 			float dt = m_GameTimer.GetDeltaTime();
 
 			Update(dt);
-			
+
 			// The most common idea for such a loop is that it returns false when quit is required, or true otherwise
 			quit = !PlatformLoop();
 
@@ -52,20 +52,33 @@ namespace GameEngine
 		{
 			Math::Vector3f pos = m_Objects[i]->GetPosition();
 
+			if (GetAsyncKeyState(VK_UP)) {
+				pos.y += 0.5f * dt;
+			}
+			if (GetAsyncKeyState(VK_DOWN)) {
+				pos.y -= 0.5f * dt;
+			}
+			if (GetAsyncKeyState(VK_RIGHT)) {
+				pos.x += 0.5f * dt;
+			}
+			if (GetAsyncKeyState(VK_LEFT)) {
+				pos.x -= 0.5f * dt;
+			}
 			// Showcase
-			if (i == 0)
-			{
-				pos.x += 0.5f * dt;
-			}
-			else if (i == 1)
-			{
-				pos.y -= 0.5f * dt;
-			}
-			else if (i == 2)
-			{
-				pos.x += 0.5f * dt;
-				pos.y -= 0.5f * dt;
-			}
+			//if (i == 0)
+			//{
+			//	pos.x += 0.5f * dt;
+			//}
+			//else if (i == 1)
+			//{
+			//	pos.y -= 0.5f * dt;
+			//}
+			//else if (i == 2)
+			//{
+			//	pos.x += 0.5f * dt;
+			//	pos.y -= 0.5f * dt;
+			//}
+
 			m_Objects[i]->SetPosition(pos, m_renderThread->GetMainFrame());
 		}
 	}
