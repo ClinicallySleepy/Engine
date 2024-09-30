@@ -77,9 +77,10 @@ namespace GameEngine::Core
 
 	void InputHandler::OnMouseMove(float dx, float dy)
 	{
+		Core::Console::PrintDebug("x: {}, y: {}\n", dx, dy);
 		dx *= 0.25 * Math::Constants::PI / 180.f;
 		dy *= 0.25 * Math::Constants::PI / 180.f;
 
-		g_MainCamera->Rotate(dx, dy);
+		g_MainCamera->Rotate(dx / 100.f, dy / 100.f);
 	}
 }

@@ -29,5 +29,11 @@ namespace GameEngine
 		Core::Timer m_GameTimer;
 		std::unique_ptr<Render::RenderThread> m_renderThread;
 		std::vector<GameObject*> m_Objects;
+		Math::Vector3f direction = Math::Vector3f::Zero();
+
+
+		std::vector<GameObject*> controllableObjects;
+		std::vector<GameObject*> movingObjects;
+		std::vector<GameObject*> physicObjects;
 	};
 }

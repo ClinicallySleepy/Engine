@@ -29,9 +29,20 @@ namespace GameEngine
 			return m_Position;
 		}
 
+		void SetVelocity(Math::Vector3f velocity, size_t frame)
+		{
+			m_Velocity = velocity;
+		}
+
+		Math::Vector3f GetVelocity()
+		{
+			return m_Velocity;
+		}
+
 	protected:
 		Render::RenderObject* m_RenderObject = nullptr;
 
 		Math::Vector3f m_Position = Math::Vector3f::Zero();
+		Math::Vector3f m_Velocity = Math::Vector3f::Zero();
 	};
 }
