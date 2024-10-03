@@ -99,13 +99,13 @@ namespace GameEngine
 			m_Objects[i]->SetPosition(pos, m_renderThread->GetMainFrame());
 		}
 
-		for (auto object : controllableObjects) {
+		for (const auto& object : controllableObjects) {
 			Math::Vector3f positionChange = direction.Normalized() * 5. * dt;
 			Math::Vector3f position = object->GetPosition();
 			object->SetPosition(position + positionChange, m_renderThread->GetMainFrame());
 		}
 
-		for (auto object : movingObjects) {
+		for (const auto& object : movingObjects) {
 			//Math::Vector3f positionChange = Math::Vector3f(1.f * std::sinf(m_GameTimer.GetTotalTime()) * dt, 0.f, 1.f * std::cosf(m_GameTimer.GetTotalTime()) * dt);
 			Math::Vector3f positionChange = Math::Vector3f(1.f * std::sinf(m_GameTimer.GetTotalTime()) * dt, 0.f, 0.f);
 			Math::Vector3f position = object->GetPosition();
@@ -114,7 +114,7 @@ namespace GameEngine
 
 		float gravitation = 1.f;
 
-		for (auto object : physicObjects) {
+		for (const auto& object : physicObjects) {
 			Math::Vector3f velocityChange = Math::Vector3f(0.f, -gravitation, 0.f);
 			Math::Vector3f velocity = object->GetVelocity() + velocityChange * dt;
 			Math::Vector3f position = object->GetPosition();
