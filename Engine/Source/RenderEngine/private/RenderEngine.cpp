@@ -57,4 +57,12 @@ namespace GameEngine::Render
 
 		m_RenderObjects.push_back(renderObject);
 	}
+
+	void RenderEngine::RemoveRenderObject(RenderObject* renderObject)
+	{
+		assert(renderObject);
+
+		std::erase(m_RenderObjects, renderObject);
+		delete renderObject;
+	}
 }

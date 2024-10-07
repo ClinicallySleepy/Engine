@@ -49,6 +49,10 @@ void RegisterEcsPhysSystems(flecs::world& world)
 	world.system<Velocity, const FrictionAmount>()
 		.each([&](flecs::entity e, Velocity& vel, const FrictionAmount& friction)
 	{
+		if (vel.value.GetLength() < 0.1) {
+			vel.value = vel.value.Zero();
+			return;
+		}
 		vel.value.x -= vel.value.x * friction.value * world.delta_time();
 		vel.value.y -= vel.value.y * friction.value * world.delta_time();
 		vel.value.z -= vel.value.z * friction.value * world.delta_time();

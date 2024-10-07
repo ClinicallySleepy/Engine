@@ -11,7 +11,7 @@ namespace GameEngine
 	{
 		namespace DefaultGeometry
 		{
-			Geometry::Ptr Cube()
+			inline Geometry::Ptr Cube()
 			{
 				constexpr Core::array<Geometry::VertexType, 8> vertices =
 				{
@@ -55,7 +55,7 @@ namespace GameEngine
 				return std::make_shared<Geometry>((Geometry::VertexType*)vertices.begin(), vertices.size(), (Geometry::IndexType*)indices.begin(), indices.size());
 			}
 
-			Geometry::Ptr CubeSphere(int subdivisions)
+			inline Geometry::Ptr CubeSphere(int subdivisions, float size)
 			{
 				using Vertex = Geometry::VertexType;
 
@@ -115,7 +115,7 @@ namespace GameEngine
 							Vertex v1 = Interpolate(corners[faces[face][3]], corners[faces[face][2]], v);
 							Vertex position = Interpolate(v0, v1, u);
 
-							position = position.Normalized() * 0.2;
+							position = position.Normalized() * size;
 							vertices.push_back(position);
 
 							if (row < subdivisions && column < subdivisions)

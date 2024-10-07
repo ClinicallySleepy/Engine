@@ -23,6 +23,11 @@ struct BouncePlane
 	GameEngine::Math::Vector4f value;
 };
 
+struct Collision
+{
+	int value;
+};
+
 struct Bounciness
 {
 	float value;
