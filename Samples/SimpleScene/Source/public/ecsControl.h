@@ -13,6 +13,11 @@ struct ControllerPtr
 	GameEngine::Core::Controller* ptr;
 };
 
+struct Cooldown
+{
+	float value;
+};
+
 struct JumpSpeed
 {
 	float value;

@@ -58,3 +58,22 @@ ECS_STRUCT(Speed,
 	float value;
 });
 
+ECS_STRUCT(TimeToLive,
+	{
+		float value;
+	});
+
+ECS_STRUCT(Projectile,
+	{
+		bool value;
+	});
+
+ECS_STRUCT(Target,
+	{
+		bool value;
+	});
+
+ECS_STRUCT(Collision,
+	{
+		int value;
+	});

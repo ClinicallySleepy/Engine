@@ -60,9 +60,59 @@ local function BounceSystem(it)
     end
 end
 
+local function DyingSystem(it)
+    for time, pos, ent in ecs.each(it) do
+        if time.value < 0 then
+            pos.x = 100000
+            ecs.delete(it)
+        else
+            time.value = time.value - it.delta_time
+        end
+    end
+end
+
+-- basically same code, doesnt work, crush on query
+-- https://github.com/flecs-hub/flecs-lua/blob/b8d95ef4b1e35bf72b5822986a81c858a147f1c9/test/query.lua#L68
+local function BulletSystem(it)
+    local targets = ecs.query("Target, Position, Velocity")
+
+    for projectile, pos1, vel1, ent1 in ecs.each(it) do
+        for target, pos2, vel2, ent2 in ecs.each(targets) do
+            if (math.abs(pos1.x - pos2.x) < 1 and math.abs(pos1.y - pos2.y) < 1 and math.abs(pos1.z - pos2.z) < 1) then
+                vel2.y = 10;
+            end
+        end
+    end
+end
+
+-- same code, doesnt work
+-- https://github.com/flecs-hub/flecs-lua/blob/b8d95ef4b1e35bf72b5822986a81c858a147f1c9/test/system.lua#L90
+local function CollisionSystem(it)
+    local collision, pos, vel = it.columns
+
+    for i = 1, it.count do
+        for j = i + 1, it.count do
+            if (collision[i] == collision[j]
+                and math.abs(pos[i].x - pos[j].x) < 1
+                and math.abs(pos[i].y - pos[j].y) < 1
+                and math.abs(pos[i].z - pos[j].z) < 1) then
+                vel[i].x = 0
+                vel[i].y = 0
+                vel[i].z = 0
+                vel[j].x = 0
+                vel[j].y = 0
+                vel[j].z = 0
+            end
+        end
+    end
+end
+
 ecs.system(move, "Move", ecs.OnUpdate, "Position, Velocity")
 ecs.system(gravity, "grav", ecs.OnUpdate, "Position, Velocity, Gravity, BouncePlane")
 ecs.system(FrictionSystem, "FrictionSystem", ecs.OnUpdate, "Velocity, FrictionAmount")
 ecs.system(ShiverSystem, "ShiverSystem", ecs.OnUpdate, "Position, ShiverAmount")
 ecs.system(BounceSystem, "BounceSystem", ecs.OnUpdate, "Position, Velocity, BouncePlane, Bounciness")
+ecs.system(DyingSystem, "DyingSystem", ecs.OnUpdate, "TimeToLive, Position")
+ecs.system(BulletSystem, "BulletSystem", ecs.OnUpdate, "Projectile, Position, Velocity")
+ecs.system(CollisionSystem, "CollisionSystem", ecs.OnUpdate, "Collision, Position, Velocity")
 

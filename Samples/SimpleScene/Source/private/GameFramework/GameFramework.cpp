@@ -39,6 +39,49 @@ void GameFramework::Init()
 		.set(Gravity{ 0.f, -9.8065f, 0.f })
 		.set(BouncePlane{ 0.f, 1.f, 0.f, 5.f })
 		.set(Bounciness{ 1.f })
+		.set(Target{ true })
+		.set(EntitySystem::ECS::GeometryPtr{ RenderCore::DefaultGeometry::Cube() })
+		.set(EntitySystem::ECS::RenderObjectPtr{ new Render::RenderObject() });
+
+	flecs::entity cubeStatic = m_World.entity()
+		.set(Position{ -4.f, 0.f, 0.f })
+		.set(Velocity{ 0.f, 0.f, 0.f })
+		.set(Gravity{ 0.f, -9.8065f, 0.f })
+		.set(BouncePlane{ 0.f, 1.f, 0.f, 5.f })
+		.set(Bounciness{ 1.f })
+		.set(Target{ true })
+		.set(EntitySystem::ECS::GeometryPtr{ RenderCore::DefaultGeometry::Cube() })
+		.set(EntitySystem::ECS::RenderObjectPtr{ new Render::RenderObject() });
+
+	flecs::entity cubeCollide1 = m_World.entity()
+		.set(Position{ 0.f, 0.f, 4.f })
+		.set(Velocity{ 0.f, 0.f, 0.f })
+		.set(Gravity{ 0.f, -9.8065f, 0.f })
+		.set(BouncePlane{ 0.f, 1.f, 0.f, 5.f })
+		.set(Bounciness{ 1.f })
+		.set(Collision{ 1 })
+		.set(EntitySystem::ECS::GeometryPtr{ RenderCore::DefaultGeometry::Cube() })
+		.set(EntitySystem::ECS::RenderObjectPtr{ new Render::RenderObject() });
+
+	flecs::entity cubeCollide2 = m_World.entity()
+		.set(Position{ 0.f, 20.f, 4.f })
+		.set(Velocity{ 0.f, 0.f, 0.f })
+		.set(Gravity{ 0.f, -9.8065f, 0.f })
+		.set(BouncePlane{ 0.f, 1.f, 0.f, 5.f })
+		.set(Bounciness{ 1.f })
+		.set(Target{ true })
+		.set(Collision{ 1 })
+		.set(EntitySystem::ECS::GeometryPtr{ RenderCore::DefaultGeometry::Cube() })
+		.set(EntitySystem::ECS::RenderObjectPtr{ new Render::RenderObject() });
+
+
+	flecs::entity cubeDying = m_World.entity()
+		.set(Position{ 6.f, 0.f, 0.f })
+		.set(Velocity{ 0.f, 5.f, 0.f })
+		.set(Gravity{ 0.f, -9.8065f, 0.f })
+		.set(BouncePlane{ 0.f, 1.f, 0.f, 5.f })
+		.set(Bounciness{ 1.f })
+		.set(TimeToLive{ 3.f })
 		.set(EntitySystem::ECS::GeometryPtr{ RenderCore::DefaultGeometry::Cube() })
 		.set(EntitySystem::ECS::RenderObjectPtr{ new Render::RenderObject() });
 
@@ -46,6 +89,7 @@ void GameFramework::Init()
 		.set(Position{ 0.0f, 12.0f, -10.0f })
 		.set(Speed{ 10.f })
 		.set(CameraPtr{ Core::g_MainCamera })
+		.set(Cooldown{ 0.f })
 		.set(ControllerPtr{ new Core::Controller(Core::g_FileSystem->GetConfigPath("Input_default.ini")) });
 }
 
@@ -60,6 +104,11 @@ void GameFramework::RegisterComponents()
 	ECS_META_COMPONENT(m_World, ShiverAmount);
 	ECS_META_COMPONENT(m_World, FrictionAmount);
 	ECS_META_COMPONENT(m_World, Speed);
+
+	ECS_META_COMPONENT(m_World, TimeToLive);
+	ECS_META_COMPONENT(m_World, Projectile);
+	ECS_META_COMPONENT(m_World, Target);
+	ECS_META_COMPONENT(m_World, Collision);
 }
 
 void GameFramework::RegisterSystems()

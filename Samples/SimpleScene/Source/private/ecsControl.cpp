@@ -6,6 +6,8 @@
 #include <Input/Controller.h>
 #include <Input/InputHandler.h>
 #include <Vector.h>
+#include <DefaultGeometry.h>
+#include <RenderObject.h>
 
 using namespace GameEngine;
 
@@ -48,6 +50,28 @@ void RegisterEcsControlSystems(flecs::world& world)
 				vel.y = jump.value;
 			}
 		}
+	});
+
+	world.system<Position, CameraPtr, const Speed, const ControllerPtr, Cooldown>()
+		.each([&](flecs::entity e, Position& position, CameraPtr& camera, const Speed& speed, const ControllerPtr& controller, Cooldown& cooldown)
+	{
+		if (cooldown.value < 0.f && controller.ptr->IsPressed("Jump"))
+		{
+			float initialSpeed = 20.f;
+			cooldown.value = 0.5f;
+
+			flecs::entity projectile = world.entity()
+				.set(Position{ position })
+				.set(Velocity{ camera.ptr->GetViewDir().x * initialSpeed, camera.ptr->GetViewDir().y * initialSpeed, camera.ptr->GetViewDir().z * initialSpeed })
+				.set(Gravity{ 0.f, -9.8065f, 0.f })
+				.set(BouncePlane{ 0.f, 1.f, 0.f, 5.f })
+				.set(Bounciness{ 0.3f })
+				.set(TimeToLive{ 5.f })
+				.set(Projectile{ true })
+				.set(EntitySystem::ECS::GeometryPtr{ RenderCore::DefaultGeometry::Cube() })
+				.set(EntitySystem::ECS::RenderObjectPtr{ new Render::RenderObject() });
+		}
+		cooldown.value -= world.delta_time();
 	});
 }
 
