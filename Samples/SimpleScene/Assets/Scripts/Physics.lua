@@ -64,7 +64,7 @@ local function DyingSystem(it)
     for time, pos, ent in ecs.each(it) do
         if time.value < 0 then
             pos.x = 100000
-            ecs.delete(ent)
+            -- ecs.delete(ent)
         else
             time.value = time.value - it.delta_time
         end
