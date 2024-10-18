@@ -11,7 +11,7 @@ namespace GameEngine::Render
 	};
 
 	template<typename LAMBDA, typename... Args>
-	class RENDER_ENGINE_API EnqueuedRenderCommand final : public RenderCommand
+	class EnqueuedRenderCommand final : public RenderCommand
 	{
 	public:
 		EnqueuedRenderCommand() = delete;

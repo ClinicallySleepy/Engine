@@ -91,7 +91,7 @@ namespace GameEngine
 				return result;
 			}
 
-			inline Vector3<T> operator+(Vector3<T> other)
+			inline Vector3<T> const operator+(Vector3<T> other) const
 			{
 				Vector3<T> result;
 				result.x = x + other.x;
@@ -100,7 +100,7 @@ namespace GameEngine
 				return result;
 			}
 
-			inline Vector3<T> operator-(Vector3<T> other)
+			inline Vector3<T> const operator-(Vector3<T> other) const
 			{
 				Vector3<T> result;
 				result.x = x - other.x;

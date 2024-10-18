@@ -7,5 +7,6 @@
 
 namespace GameEngine::Render
 {
+	//template void RENDER_ENGINE_API RenderThread::EnqueueCommand<RenderObject*>(ERC command, RenderObject* renderObject);
 	template void RENDER_ENGINE_API RenderThread::EnqueueCommand<RenderCore::Geometry::Ptr, RenderObject*>(ERC command, RenderCore::Geometry::Ptr geometry, RenderObject* renderObject);
 }
